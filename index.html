@@ -25,6 +25,12 @@
             max-width: 350px;
             width: 90%;
         }
+        .station-group {
+            display: none; /* Hidden by default, toggled via JS */
+        }
+        .station-group.active {
+            display: block; /* Only show the matching ID */
+        }
         audio {
             width: 100%;
             margin: 20px 0;
@@ -44,58 +50,66 @@
             background-color: #0077ed;
         }
         h2 { margin-top: 0; }
+        .error-msg { display: none; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2 id="title">Loading...</h2>
-    <p>Listen to the audio details before continuing to the location.</p>
-    
-    <audio id="audioPlayer" controls>
-        Your browser does not support the audio element.
-    </audio>
+    <div id="station-1" class="station-group">
+        <h2>المحطة الاولى</h2>
+        <p>Listen to the audio details before continuing to the location.</p>
+        <audio controls preload="auto">
+            <source src="track1.mp3" type="audio/mpeg">
+        </audio>
+        <a href="https://maps.app.goo.gl/uo8dHA4GQM498pMw6" class="btn">Continue to Maps</a>
+    </div>
 
-    <a id="mapsLink" href="#" class="btn">Continue to Maps</a>
+    <div id="station-2" class="station-group">
+        <h2>المحطه الثانية</h2>
+        <p>Listen to the audio details before continuing to the location.</p>
+        <audio controls preload="auto">
+            <source src="track2.mp3" type="audio/mpeg">
+        </audio>
+        <a href="https://maps.app.goo.gl/1XgdJeFTcJSXJzhp8" class="btn">Continue to Maps</a>
+    </div>
+
+    <div id="station-3" class="station-group">
+        <h2>المحطة الثالثة</h2>
+        <p>Listen to the audio details before continuing to the location.</p>
+        <audio controls preload="auto">
+            <source src="track3.mp3" type="audio/mpeg">
+        </audio>
+        <a href="https://maps.app.goo.gl/zKwwi3dGWA2M24Tz8" class="btn">Continue to Maps</a>
+    </div>
+
+    <div id="station-4" class="station-group">
+        <h2>المحطة الرابعة</h2>
+        <p>Listen to the audio details before continuing to the location.</p>
+        <audio controls preload="auto">
+            <source src="track4.mp3" type="audio/mpeg">
+        </audio>
+        <a href="https://maps.app.goo.gl/Tkb1sWoKXjr3cryS8" class="btn">Continue to Maps</a>
+    </div>
+
+    <div id="error" class="error-msg">
+        <h2>Location Not Found</h2>
+    </div>
 </div>
 
 <script>
-    const data = {
-        "1": {
-            title: "المحطة الاولى",
-            audio: "https://docs.google.com/uc?export=download&id=1XE0epo7DE1X0sLnaCjhir5DPT9GvxvPl",
-            maps: "https://maps.google.com/?q=Hamad+Town" // Replace with real link
-        },
-        "2": {
-            title: "المحطه الثانية",
-            audio: "https://docs.google.com/uc?export=download&id=14FkaY6Rz8zbh15lFaHY0yw0SbfC-0cMm",
-            maps: "https://maps.google.com/" // Replace with real link
-        },
-        "3": {
-            title: "المحطة الثالثة",
-            audio: "https://docs.google.com/uc?export=download&id=1AQn6hdJAT285jlofiWFowC-qazZp3mRG",
-            maps: "https://maps.google.com/" // Replace with real link
-        },
-        "4": {
-            title: "المحطة الرابعة",
-            audio: "https://docs.google.com/uc?export=download&id=16zRUk1ODW9a7ZhGExkjXLtF4lXEQxAp-",
-            maps: "https://maps.google.com/" // Replace with real link
-        }
-    };
-
+    // Get URL ID parameter (?id=1)
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id') || "1"; 
+    const id = urlParams.get('id') || "1"; // Default to 1 if empty /
 
-    if (data[id]) {
-        document.getElementById('title').innerText = data[id].title;
-        document.getElementById('mapsLink').href = data[id].maps;
-        
-        // FIX: Update src directly on the audio tag instead of source child
-        const player = document.getElementById('audioPlayer');
-        player.src = data[id].audio;
-        player.load();
+    const targetStation = document.getElementById(`station-${id}`);
+
+    if (targetStation) {
+        // Show the correct station block
+        targetStation.classList.add('active');
     } else {
-        document.getElementById('title').innerText = "Location Not Found";
+        // Show error if id is invalid
+        document.getElementById('error').style.display = 'block';
     }
 </script>
 
