@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen & Continue</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 350px;
+            width: 90%;
+        }
+        audio {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #0071e3;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #0077ed;
+        }
+        h2 { margin-top: 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="title">Loading...</h2>
+    <p>Listen to the audio details before continuing to the location.</p>
+    
+    <audio id="audioPlayer" controls>
+        <source id="audioSource" src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <a id="mapsLink" href="#" class="btn">Continue to Maps</a>
+</div>
+
+<script>
+    // 1. Paste your 5 sets of links here
+    c// 1. Paste your 5 sets of links here
+    const data = {
+        "1": {
+            title: "المحطة الاولى",
+            audio: "https://docs.google.com/uc?export=download&id=1XE0epo7DE1X0sLnaCjhir5DPT9GvxvPl",
+            maps: "https://maps.app.goo.gl/uo8dHA4GQM498pMw6" // مركز مدينة حمد النموذجي
+        },
+        "2": {
+            title: "المحطه الثانية",
+            audio: "https://docs.google.com/uc?export=download&id=14FkaY6Rz8zbh15lFaHY0yw0SbfC-0cMm",
+            maps: "https://maps.app.goo.gl/1XgdJeFTcJSXJzhp8" // الفرع
+        },
+        "3": {
+            title: "المحطة الثالثة",
+            audio: "https://docs.google.com/uc?export=download&id=1AQn6hdJAT285jlofiWFowC-qazZp3mRG",
+            maps: "https://maps.app.goo.gl/zKwwi3dGWA2M24Tz8"// بيت السلطان
+        },
+        "4": {
+            title: "المحطة الرابعة",
+            audio: "https://docs.google.com/uc?export=download&id=16zRUk1ODW9a7ZhGExkjXLtF4lXEQxAp-",
+            maps: "https://maps.app.goo.gl/Tkb1sWoKXjr3cryS8" // جامعه المملكة
+        },
+    };
+
+    // 2. Read the "?id=" value from the browser URL bar
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id') || "1"; // Default to 1 if missing
+
+    // 3. Update the page content based on the ID
+    if (data[id]) {
+        document.getElementById('title').innerText = data[id].title;
+        document.getElementById('audioSource').src = data[id].audio;
+        document.getElementById('mapsLink').href = data[id].maps;
+        // Reload audio element to apply the new source link
+        document.getElementById('audioPlayer').load();
+    } else {
+        document.getElementById('title').innerText = "Location Not Found";
+    }
+</script>
+
+</body>
+</html>
